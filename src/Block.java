@@ -35,11 +35,11 @@ public class Block {
         return this.y;
     }
 
-    public int getPosGauche() {
+    public int getLeftPosition() {
         return this.x;
     }
 
-    public int getPosDroite() {
+    public int getRightPosition() {
         return this.x + this.width;
     }
 

@@ -35,4 +35,18 @@ public class Field {
             currentLevel++; // TODO: Faire une animation ?
         }
     }
+
+    public void update() {  }
+
+    public ArrayDeque<Block> getBlocks() {
+        return blocks;
+    }
+
+    public int getTop() {
+        return top;
+    }
+
+    public int getBottom() {
+        return bottom;
+    }
 }

@@ -18,5 +18,23 @@ public class GamePanel extends JPanel {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        // Dessine les blocs
+        field.getBlocks()
+                .forEach(block -> g.fillRect(
+                        block.getLeftPosition(),
+                        field.getTop() - block.getAltitude(),
+                        block.getWidth(),
+                        10
+                ));
+
+        // Dessine le personnage
+        g.fillOval(
+                axel.getX() - 5,
+                field.getTop() - axel.getY() - 10,
+                10,
+                10
+        );
     }
+
 }
