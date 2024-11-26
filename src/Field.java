@@ -20,8 +20,8 @@ public class Field {
         this.bottom = 0;
         this.blocks = new ArrayDeque<>();
 
-        // Ajout du premier block 
-        this.blocks.addFirst(new Block(this.width - Block.INITIAL_MAX_WIDTH, START_ALTITUDE, Block.INITIAL_MAX_WIDTH));
+        // Ajout du premier block
+        this.blocks.addFirst(new Block((this.width / 2) - (Block.INITIAL_MAX_WIDTH / 2), Field.START_ALTITUDE - 15, Block.INITIAL_MAX_WIDTH));
 
         // deuxieme bloc a partir d une altitude de 40+80
         for (int altitude = START_ALTITUDE + ALTITUDE_GAP; altitude < this.height; altitude += ALTITUDE_GAP) {
