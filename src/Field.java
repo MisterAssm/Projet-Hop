@@ -4,13 +4,13 @@ public class Field {
 
 
 
-    public static final int ALTITUDE_GAP = 80; //ecart d'altitude entre deux blocs
-    public static final int START_ALTITUDE = 40; //altitude de premier bloc
+    public static final int ALTITUDE_GAP = 80; // ecart d'altitude entre deux blocs
+    public static final int START_ALTITUDE = 40; // altitude de premier bloc
 
     public final int width;
-    public final int height;  //largeur et hauteur de terrain 
+    public final int height;  // largeur et hauteur de terrain
 
-    private int bottom, top;  //bottom and top altitude
+    private int bottom, top;  // bottom and top altitude
 
     private final ArrayDeque<Block> blocks ;
     private int level=0;

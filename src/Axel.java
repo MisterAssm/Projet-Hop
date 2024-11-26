@@ -1,9 +1,9 @@
 public class Axel {
-    public static final double MAX_FALL_SPEED = -20;
-    public static final double JUMP_SPEED = 20;
-    public static final double GRAVITY = 1;
-    public static final double DIVE_SPEED = 3 * GRAVITY;
-    public static final double LATERAL_SPEED = 8;
+    public static final double MAX_FALL_SPEED = -20; // limite de vitesse verticale négative
+    public static final double JUMP_SPEED = 20; // vitesse verticale au début d'un saut
+    public static final double GRAVITY = 1; // décroissance de la vitesse verticale à chaque tour
+    public static final double DIVE_SPEED = 3 * GRAVITY; // décroissance suppl. vitesse verticale en piqué
+    public static final double LATERAL_SPEED = 8; // valeur de déplacement latéral par tour
 
     private int x, y;
 

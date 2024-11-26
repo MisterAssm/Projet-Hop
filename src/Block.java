@@ -46,6 +46,4 @@ public class Block {
         return this.x+ this.width;
     }
 
-
-
 }

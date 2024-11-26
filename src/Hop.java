@@ -2,9 +2,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 
 public class Hop {
-    public static final int WIDTH = 400;
-    public static final int HEIGHT = 600;
-    public static final int DELAY = 40;
+    public static final int WIDTH = 400; // largeur terrain
+    public static final int HEIGHT = 600; // hauteur terrain
+    public static final int DELAY = 40; // durée d'un tour de jeu
 
     private final JFrame frame;
     private final Field field;
