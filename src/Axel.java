@@ -3,11 +3,11 @@ import java.util.stream.Stream;
 public class Axel {
 
     // --- Constantes physiques du jeu ---
-    public static final double MAX_FALL_SPEED = -15.0; // Vitesse maximale de chute
-    public static final double MAX_JUMP_SPEED = 25.0; // Vitesse de saut
-    public static final double GRAVITY_FORCE = 1.5;   // Force de gravité
-    public static final double DIVE_ACCELERATION = 4.0; // Accélération en piqué
-    public static final double HORIZONTAL_SPEED = 10.0; // Vitesse latérale
+    public static final double LATERAL_SPEED = 10.0; // Vitesse latérale
+    public static final double MAX_JUMP_SPEED = 20.0; // Vitesse de saut
+    public static final double MAX_FALL_SPEED = -20.0; // Vitesse maximale de chute
+    public static final double GRAVITY_FORCE = 1;   // Force de gravité
+    public static final double DIVE_SPEED = 3.0; // Accélération en piqué
 
     // --- Dimensions du personnage ---
     public static final int CHARACTER_WIDTH = 10;
@@ -48,15 +48,15 @@ public class Axel {
 
         if (isFalling) {
             velocityY -= GRAVITY_FORCE;
-            if (isDiving) velocityY -= DIVE_ACCELERATION;
+            if (isDiving) velocityY -= DIVE_SPEED;
             velocityY = Math.max(velocityY, MAX_FALL_SPEED);
         }
     }
 
     private void calculateHorizontalSpeed() {
         velocityX = Stream.of(
-                movingLeft ? -HORIZONTAL_SPEED : 0,
-                movingRight ? HORIZONTAL_SPEED : 0
+                movingLeft ? -LATERAL_SPEED : 0,
+                movingRight ? LATERAL_SPEED : 0
         ).reduce(0.0, Double::sum);
     }
 
