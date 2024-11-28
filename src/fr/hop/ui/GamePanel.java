@@ -1,5 +1,6 @@
 package fr.hop.ui;
 
+import fr.hop.Hop;
 import fr.hop.game.Field;
 import fr.hop.entities.Axel;
 
@@ -22,10 +23,16 @@ public class GamePanel extends JPanel {
 
         setPreferredSize(new Dimension(field.width, field.height));
         setLayout(new FlowLayout(FlowLayout.CENTER)); // https://stackoverflow.com/questions/75519236/how-to-use-flow-layout-inside-a-panel-in-java
+        setBackground(new Color(247, 239, 233));
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        // Dessiner le fond quadrillé
+        drawGrid(g);
+
+        g.setColor(Color.black);
 
         // Dessine les blocs
         field.getBlocks()
@@ -45,6 +52,20 @@ public class GamePanel extends JPanel {
                 AXEL_WIDTH,
                 AXEL_HEIGHT
         );
+    }
+
+    private void drawGrid(Graphics g) {
+        g.setColor(new Color(245, 231, 219));
+
+        int gridSpacing = 20;
+
+        for (int x = 0; x < field.width; x += gridSpacing) {
+            g.drawLine(x, 0, x, field.height);
+        }
+
+        for (int y = 0; y < field.height; y += gridSpacing) {
+            g.drawLine(0, y, field.width, y);
+        }
     }
 
 }
