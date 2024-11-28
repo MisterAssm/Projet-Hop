@@ -5,6 +5,7 @@ import fr.hop.entities.Axel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.AbstractMap;
 
 public class GamePanel extends JPanel {
 
@@ -35,10 +36,12 @@ public class GamePanel extends JPanel {
                         BLOCK_HEIGHT
                 ));
 
+        AbstractMap.SimpleEntry<Integer, Integer> position = axel.nextDrawPosition();
+
         // Dessine le personnage
         g.fillOval(
-                axel.getX() - AXEL_WIDTH / 2,
-                field.getTop() - axel.getY() - AXEL_HEIGHT,
+                position.getKey() - AXEL_WIDTH / 2,
+                field.getTop() - position.getValue() - AXEL_HEIGHT,
                 AXEL_WIDTH,
                 AXEL_HEIGHT
         );

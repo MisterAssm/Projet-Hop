@@ -1,7 +1,11 @@
 package fr.hop.entities;
 
+import fr.hop.Hop;
 import fr.hop.game.Field;
 import fr.hop.ui.GamePanel;
+import fr.hop.utilities.CoordinateUtilities;
+
+import java.util.*;
 
 public class Axel {
 
@@ -30,11 +34,14 @@ public class Axel {
     private int highestAltitude = 0; // Altitude maximale atteinte
     private final Field gameField;
 
+    private Queue<AbstractMap.SimpleEntry<Integer, Integer>> drawPositions; // FIFO
+
     public Axel(Field field, int startX, int startY) {
         this.gameField = field;
         this.currentX = startX;
         this.currentY = startY;
         this.isAlive = true;
+        this.drawPositions = new ArrayDeque<>();
     }
 
     // Mise à jour de la vitesse en fonction des actions
@@ -97,7 +104,8 @@ public class Axel {
         updateSpeed();
         checkCollision();
 
-        // Mise à jour des positions actuelles
+        this.drawPositions = CoordinateUtilities.generateCoordinates(3, (int) currentX, (int) currentY, (int) nextX, (int) nextY);
+
         currentX = nextX;
         currentY = nextY;
 
@@ -107,12 +115,12 @@ public class Axel {
         }
     }
 
-    public int getX() {
-        return (int) currentX;
+    public AbstractMap.SimpleEntry<Integer, Integer> getPosition() {
+        return new AbstractMap.SimpleEntry<>((int) this.currentX, (int) this.currentY);
     }
 
-    public int getY() {
-        return (int) currentY;
+    public AbstractMap.SimpleEntry<Integer, Integer> nextDrawPosition() {
+        return Optional.ofNullable(drawPositions.poll()).orElse(getPosition());
     }
 
     public boolean hasFallen() {

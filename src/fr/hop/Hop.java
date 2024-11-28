@@ -18,7 +18,8 @@ public class Hop {
     private final JFrame frame;
     private final Field field;
     private final Axel axel;
-    private Timer timer;
+    private Timer gameTimer;
+    private Timer drawTimer;
     private GamePanel gamePanel;
     private StatisticsPanel statisticsPanel;
     private GameHandler gameHandler;
@@ -39,10 +40,13 @@ public class Hop {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void round() {
-        axel.update();
-        field.update();
-        frame.repaint();
+    public void round(boolean update) {
+        if (update) {
+            axel.update();
+            field.update();
+        } else {
+            frame.repaint();
+        }
     }
 
     public boolean over() {
@@ -52,15 +56,23 @@ public class Hop {
     public static void main(String[] args) {
         Hop game = new Hop();
 
-        game.timer = new Timer(DELAY, (ActionEvent e) -> {
-            game.round();
+        game.drawTimer = new Timer(1, _ -> {
+            game.round(false);
+        });
+
+        game.drawTimer.start();
+
+        game.gameTimer = new Timer(DELAY, _ -> {
+            game.round(true);
+
             if (game.over()) {
-                game.timer.stop();
+                game.drawTimer.stop();
+                game.gameTimer.stop();
                 game.frame.remove(game.gamePanel);
                 // TODO: STATS INTERFACE
             }
         });
 
-        game.timer.start();
+        game.gameTimer.start();
     }
 }
