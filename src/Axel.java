@@ -9,10 +9,6 @@ public class Axel {
     public static final double GRAVITY_FORCE = 1;   // Force de gravité
     public static final double DIVE_SPEED = 3.0; // Accélération en piqué
 
-    // --- Dimensions du personnage ---
-    public static final int CHARACTER_WIDTH = 10;
-    public static final int CHARACTER_HEIGHT = 10;
-
     // --- Position et vitesse ---
     private double currentX;    // Position actuelle en X
     private double currentY;    // Position actuelle en Y
@@ -54,10 +50,7 @@ public class Axel {
     }
 
     private void calculateHorizontalSpeed() {
-        velocityX = Stream.of(
-                movingLeft ? -LATERAL_SPEED : 0,
-                movingRight ? LATERAL_SPEED : 0
-        ).reduce(0.0, Double::sum);
+        velocityX = (movingLeft ? -LATERAL_SPEED : 0) + (movingRight ? LATERAL_SPEED : 0);
     }
 
     public void updateSpeed() {
@@ -108,9 +101,8 @@ public class Axel {
         currentY = nextY;
 
         // Vérification de la survie
-        if (currentY < gameField.getBottom() - CHARACTER_HEIGHT) {
+        if (currentY < gameField.getBottom() - GamePanel.AXEL_HEIGHT) {
             isAlive = false;
-            // TODO: Animation ?
         }
     }
 

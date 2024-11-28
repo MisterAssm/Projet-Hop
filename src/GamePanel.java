@@ -2,9 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GamePanel extends JPanel {
-    private static final int BLOCK_HEIGHT = 10;
-    private static final int AXEL_WIDTH = 10;
-    private static final int AXEL_HEIGHT = 10;
+
+    public static final int BLOCK_HEIGHT = 10;
+    public static final int AXEL_WIDTH = 10;
+    public static final int AXEL_HEIGHT = 10;
 
     private final Axel axel;
     private final Field field;

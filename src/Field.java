@@ -1,4 +1,6 @@
 import java.util.ArrayDeque;
+import java.util.Comparator;
+import java.util.Optional;
 
 public class Field {
 
@@ -25,7 +27,7 @@ public class Field {
 
         // deuxieme bloc a partir d une altitude de 40+80
         for (int altitude = START_ALTITUDE + ALTITUDE_GAP; altitude < this.height; altitude += ALTITUDE_GAP) {
-            this.blocks.addFirst(Block.randomBlock(this.currentLevel, altitude, this.width));
+            addBlockAtAltitude(altitude);
             altitude += ALTITUDE_GAP;
         }
     }
@@ -36,7 +38,22 @@ public class Field {
         }
     }
 
-    public void update() {  }
+    public void update() {
+        this.bottom += currentLevel;
+        this.top += currentLevel;
+
+        blocks.removeIf(block -> block.getAltitude() < this.bottom);
+
+        blocks.stream().max(Comparator.comparingInt(Block::getAltitude)).ifPresent(highestBlock -> {
+            if (this.top - highestBlock.getAltitude() >= ALTITUDE_GAP)
+                addBlockAtAltitude(highestBlock.getAltitude() + ALTITUDE_GAP);
+        });
+
+    }
+
+    private void addBlockAtAltitude(int altitude) {
+        this.blocks.addFirst(Block.randomBlock(this.currentLevel, altitude, this.width));
+    }
 
     public ArrayDeque<Block> getBlocks() {
         return blocks;
