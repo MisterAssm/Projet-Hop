@@ -13,9 +13,10 @@ public class Field {
     public static final int[] levelAltitude = new int[]{80, 800, 2000, 3200, 4800, 7200};
     public static final int maxLevel = levelAltitude.length;
 
-    public final int width, height; // largeur et hauteur de terrain
     private int bottom, top;  // bottom and top altitude
     private int currentLevel = 0;
+
+    public final int width, height; // largeur et hauteur de terrain
     private final ArrayDeque<Block> blocks; // permet d'agir comme une file d'attente
 
     public Field(int width, int height) {

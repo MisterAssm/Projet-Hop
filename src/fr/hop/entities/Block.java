@@ -24,7 +24,7 @@ public class Block {
     }
 
     public static Block randomBlock(int niveau, int y, int largeurField) {
-        int width = Block.randomNumber(50 - niveau * 5, 100 - niveau * 10); // valeurs dépendant du niveau
+        int width = Block.randomNumber(INITIAL_MIN_WIDTH - niveau * 5, INITIAL_MAX_WIDTH - niveau * 10); // valeurs dépendant du niveau
         int x = Block.randomNumber(0, largeurField - width); // pour ne pas depasser la zone
         return new Block(x, y, width);
     }

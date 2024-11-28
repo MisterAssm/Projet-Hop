@@ -5,28 +5,27 @@ import fr.hop.ui.GamePanel;
 
 public class Axel {
 
-    // --- Constantes physiques du jeu ---
     public static final double LATERAL_SPEED = 10.0; // Vitesse latérale
     public static final double MAX_JUMP_SPEED = 20.0; // Vitesse de saut
     public static final double MAX_FALL_SPEED = -20.0; // Vitesse maximale de chute
     public static final double GRAVITY_FORCE = 1;   // Force de gravité
     public static final double DIVE_SPEED = 3.0; // Accélération en piqué
 
-    // --- Position et vitesse ---
-    private double currentX;    // Position actuelle en X
-    private double currentY;    // Position actuelle en Y
+    // Position et vitesse
+    private double currentX;
+    private double currentY;
     private double velocityX;   // Vitesse horizontale
     private double velocityY;   // Vitesse verticale
-    private double nextX;       // Position cible en X
-    private double nextY;       // Position cible en Y
+    private double nextX;
+    private double nextY;
 
-    // --- États du personnage ---
-    private boolean isFalling;   // En chute
-    private boolean isJumping;   // En saut
-    private boolean isDiving;    // En piqué
-    private boolean movingLeft;  // Déplacement à gauche
-    private boolean movingRight; // Déplacement à droite
-    private boolean isAlive;     // Personnage vivant ou non
+    // États du personnage
+    private boolean isFalling;
+    private boolean isJumping;
+    private boolean isDiving;
+    private boolean movingLeft;
+    private boolean movingRight;
+    private boolean isAlive;
 
     private int highestAltitude = 0; // Altitude maximale atteinte
     private final Field gameField;
@@ -38,7 +37,7 @@ public class Axel {
         this.isAlive = true;
     }
 
-    // --- Mise à jour de la vitesse en fonction des actions ---
+    // Mise à jour de la vitesse en fonction des actions
     private void calculateVerticalSpeed() {
         if (isJumping && !isFalling) {
             velocityY = MAX_JUMP_SPEED;
@@ -65,7 +64,7 @@ public class Axel {
         nextY = currentY + velocityY;
     }
 
-    // --- Vérification des collisions avec un bloc ---
+    // Vérification des collisions avec un bloc
     private void performCollisionWithBlock(Block block) {
         if (nextY > block.getAltitude() || currentX < block.getLeftPosition() || currentX > block.getRightPosition()) {
             isFalling = true; // Chute si on dépasse les limites du bloc
@@ -94,7 +93,6 @@ public class Axel {
                 .ifPresentOrElse(this::performCollisionWithBlock, () -> isFalling = true); // si il y en a pas, c'est qu'il est en train de tomber
     }
 
-    // --- Mise à jour de l'état du personnage ---
     public void update() {
         updateSpeed();
         checkCollision();

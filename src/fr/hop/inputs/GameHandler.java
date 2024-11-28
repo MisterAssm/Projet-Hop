@@ -10,16 +10,15 @@ import java.util.function.Function;
 
 public class GameHandler implements KeyListener {
 
-    private Axel axel;
-    private final Map<Integer, Function<Boolean, Runnable>> keyActions = Map.of(
-            KeyEvent.VK_UP, (isPressed) -> () -> axel.setJumping(isPressed),
-            KeyEvent.VK_DOWN, (isPressed) -> () -> axel.setDiving(isPressed),
-            KeyEvent.VK_LEFT, (isPressed) -> () -> axel.setMovingLeft(isPressed),
-            KeyEvent.VK_RIGHT, (isPressed) -> () -> axel.setMovingRight(isPressed)
-    );
+    private final Map<Integer, Function<Boolean, Runnable>> keyActions;
 
     public GameHandler(Axel axel) {
-        this.axel = axel;
+        keyActions = Map.of(
+                KeyEvent.VK_UP, (isPressed) -> () -> axel.setJumping(isPressed),
+                KeyEvent.VK_DOWN, (isPressed) -> () -> axel.setDiving(isPressed),
+                KeyEvent.VK_LEFT, (isPressed) -> () -> axel.setMovingLeft(isPressed),
+                KeyEvent.VK_RIGHT, (isPressed) -> () -> axel.setMovingRight(isPressed)
+        );
     }
 
     @Override
