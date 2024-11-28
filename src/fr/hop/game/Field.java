@@ -69,4 +69,8 @@ public class Field {
     public int getBottom() {
         return bottom;
     }
+
+    public int getCurrentLevel() {
+        return currentLevel;
+    }
 }

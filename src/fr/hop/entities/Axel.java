@@ -122,7 +122,7 @@ public class Axel {
     }
 
     public int getScore() {
-        return highestAltitude - Field.START_ALTITUDE;
+        return Math.max(highestAltitude - Field.START_ALTITUDE, 0);
     }
 
     public void setJumping(boolean jumping) {

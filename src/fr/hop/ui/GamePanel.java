@@ -20,6 +20,7 @@ public class GamePanel extends JPanel {
         this.axel = axel;
 
         setPreferredSize(new Dimension(field.width, field.height));
+        setLayout(new FlowLayout(FlowLayout.CENTER)); // https://stackoverflow.com/questions/75519236/how-to-use-flow-layout-inside-a-panel-in-java
     }
 
     public void paintComponent(Graphics g) {
