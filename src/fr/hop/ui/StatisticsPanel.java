@@ -33,8 +33,8 @@ public class StatisticsPanel extends JPanel {
     }
 
     public void update() {
-        levelLabel.setText(STR."Difficulté : \{field.getCurrentLevel()}");
-        scoreLabel.setText(STR."Score : \{axel.getScore()}");
+        levelLabel.setText(String.format("Difficulté : %s", field.getCurrentLevel()));
+        scoreLabel.setText(String.format("Score : %s", axel.getScore()));
     }
 
     @Override
