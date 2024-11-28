@@ -1,3 +1,5 @@
+package fr.hop.entities;
+
 import java.util.Random;
 
 public class Block {

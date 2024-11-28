@@ -1,6 +1,9 @@
+package fr.hop.game;
+
+import fr.hop.entities.Block;
+
 import java.util.ArrayDeque;
 import java.util.Comparator;
-import java.util.Optional;
 
 public class Field {
 

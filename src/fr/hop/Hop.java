@@ -1,3 +1,10 @@
+package fr.hop;
+
+import fr.hop.entities.Axel;
+import fr.hop.game.Field;
+import fr.hop.inputs.GameHandler;
+import fr.hop.ui.GamePanel;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 
@@ -19,7 +26,7 @@ public class Hop {
         this.gamePanel = new GamePanel(field, axel);
         this.gameHandler = new GameHandler(axel);
 
-        this.frame = new JFrame("Hop!");
+        this.frame = new JFrame("fr.Hop!");
         frame.add(gamePanel);
         frame.addKeyListener(gameHandler);
         frame.pack();

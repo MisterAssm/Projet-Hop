@@ -1,4 +1,7 @@
-import java.util.stream.Stream;
+package fr.hop.entities;
+
+import fr.hop.game.Field;
+import fr.hop.ui.GamePanel;
 
 public class Axel {
 

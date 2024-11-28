@@ -1,3 +1,8 @@
+package fr.hop.ui;
+
+import fr.hop.game.Field;
+import fr.hop.entities.Axel;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -26,15 +31,15 @@ public class GamePanel extends JPanel {
                         block.getLeftPosition(),
                         field.getTop() - block.getAltitude(),
                         block.getWidth(),
-                        10
+                        BLOCK_HEIGHT
                 ));
 
         // Dessine le personnage
         g.fillOval(
-                axel.getX() - 5,
-                field.getTop() - axel.getY() - 10,
-                10,
-                10
+                axel.getX() - AXEL_WIDTH / 2,
+                field.getTop() - axel.getY() - AXEL_HEIGHT,
+                AXEL_WIDTH,
+                AXEL_HEIGHT
         );
     }
 

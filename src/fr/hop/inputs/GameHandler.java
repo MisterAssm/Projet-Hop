@@ -1,3 +1,7 @@
+package fr.hop.inputs;
+
+import fr.hop.entities.Axel;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Map;
