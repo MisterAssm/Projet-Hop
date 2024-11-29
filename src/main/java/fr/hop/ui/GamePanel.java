@@ -1,8 +1,7 @@
 package fr.hop.ui;
 
-import fr.hop.Hop;
-import fr.hop.game.Field;
 import fr.hop.entities.Axel;
+import fr.hop.game.Field;
 
 import javax.swing.*;
 import java.awt.*;

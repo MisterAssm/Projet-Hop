@@ -1,6 +1,5 @@
 package fr.hop.entities;
 
-import fr.hop.Hop;
 import fr.hop.game.Field;
 import fr.hop.ui.GamePanel;
 import fr.hop.utilities.CoordinateUtilities;

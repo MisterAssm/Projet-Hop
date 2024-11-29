@@ -1,14 +1,13 @@
 package fr.hop;
 
 import fr.hop.entities.Axel;
-import fr.hop.game.Field;
 import fr.hop.inputs.GameHandler;
-import fr.hop.ui.GamePanel;
 import fr.hop.ui.StatisticsPanel;
+import fr.hop.game.Field;
+import fr.hop.ui.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
 public class Hop {
     public static final int WIDTH = 400; // largeur terrain
