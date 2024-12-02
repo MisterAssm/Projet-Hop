@@ -6,6 +6,8 @@ import fr.hop.utilities.CoordinateUtilities;
 
 import java.util.*;
 
+import static fr.hop.ui.GamePanel.AXEL_WIDTH;
+
 public class Axel {
 
     public static final double LATERAL_SPEED = 10.0; // Vitesse latérale
@@ -33,6 +35,8 @@ public class Axel {
     private int highestAltitude = 0; // Altitude maximale atteinte
     private final Field gameField;
 
+    private boolean lastFacingLeft;
+
     private Queue<AbstractMap.SimpleEntry<Integer, Integer>> drawPositions; // FIFO
 
     public Axel(Field field, int startX, int startY) {
@@ -41,6 +45,7 @@ public class Axel {
         this.currentY = startY;
         this.isAlive = true;
         this.drawPositions = new ArrayDeque<>();
+        this.lastFacingLeft = false;
     }
 
     // Mise à jour de la vitesse en fonction des actions
@@ -70,9 +75,14 @@ public class Axel {
         nextY = currentY + velocityY;
     }
 
+    private boolean nextXIsFalling(double x, Block block) {
+        return x < block.getLeftPosition() || x > block.getRightPosition() + AXEL_WIDTH / 2.42; // 2.42 car j'ai mesuré
+    }
+
     // Vérification des collisions avec un bloc
     private void performCollisionWithBlock(Block block) {
-        if (nextY > block.getAltitude() || currentX < block.getLeftPosition() || currentX > block.getRightPosition()) {
+        // On considère les pieds - nez qui dépasse
+        if (nextY > block.getAltitude() || nextXIsFalling(currentX, block)) {
             isFalling = true; // Chute si on dépasse les limites du bloc
         } else {
             nextY = block.getAltitude();
@@ -86,7 +96,7 @@ public class Axel {
             }
 
             // Si on dépasse les limites latérales, on retombe
-            if (nextX < block.getLeftPosition() || nextX > block.getRightPosition()) {
+            if (nextXIsFalling(nextX, block)) {
                 isFalling = true;
             }
         }
@@ -140,9 +150,15 @@ public class Axel {
 
     public void setMovingLeft(boolean movingLeft) {
         this.movingLeft = movingLeft;
+        this.lastFacingLeft = true;
     }
 
     public void setMovingRight(boolean movingRight) {
         this.movingRight = movingRight;
+        this.lastFacingLeft = false;
+    }
+
+    public boolean isLastFacingLeft() {
+        return lastFacingLeft;
     }
 }
