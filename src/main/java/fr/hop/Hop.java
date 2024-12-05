@@ -43,9 +43,9 @@ public class Hop {
         if (update) {
             axel.update();
             field.update();
-        } else {
-            frame.repaint();
         }
+
+        frame.repaint();
     }
 
     public boolean over() {
@@ -55,13 +55,13 @@ public class Hop {
     public static void main(String[] args) {
         Hop game = new Hop();
 
-        game.drawTimer = new Timer(1, _ -> {
+        game.drawTimer = new Timer(1, ignored -> {
             game.round(false);
         });
 
         game.drawTimer.start();
 
-        game.gameTimer = new Timer(DELAY, _ -> {
+        game.gameTimer = new Timer(DELAY, ignored -> {
             game.round(true);
 
             if (game.over()) {
