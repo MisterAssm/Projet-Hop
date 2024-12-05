@@ -32,6 +32,7 @@ public class GamePanel extends JPanel {
             axelSymmetryImage = ImageUtilities.miroirImage(axelImage);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println("ERREUR: L'image n'a pas pu charger...");
         }
 
         setPreferredSize(new Dimension(field.width, field.height));

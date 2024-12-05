@@ -150,12 +150,16 @@ public class Axel {
 
     public void setMovingLeft(boolean movingLeft) {
         this.movingLeft = movingLeft;
-        this.lastFacingLeft = true;
+        if (movingLeft) {
+            this.lastFacingLeft = true;
+        }
     }
 
     public void setMovingRight(boolean movingRight) {
         this.movingRight = movingRight;
-        this.lastFacingLeft = false;
+        if (movingRight) {
+            this.lastFacingLeft = false;
+        }
     }
 
     public boolean isLastFacingLeft() {

@@ -55,12 +55,7 @@ public class Hop {
     public static void main(String[] args) {
         Hop game = new Hop();
 
-        game.drawTimer = new Timer(1, ignored -> {
-            game.round(false);
-        });
-
-        game.drawTimer.start();
-
+        game.drawTimer = new Timer(1, ignored -> game.round(false));
         game.gameTimer = new Timer(DELAY, ignored -> {
             game.round(true);
 
@@ -73,6 +68,7 @@ public class Hop {
             }
         });
 
+        game.drawTimer.start();
         game.gameTimer.start();
     }
 }
