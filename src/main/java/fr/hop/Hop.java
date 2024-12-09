@@ -64,7 +64,7 @@ public class Hop {
                 game.gameTimer.stop();
                 game.frame.remove(game.gamePanel);
                 game.frame.remove(game.statisticsPanel);
-                // TODO: STATS INTERFACE
+                // TODO: STATS INTERFACE TEST
             }
         });
 
