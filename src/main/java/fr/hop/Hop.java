@@ -52,6 +52,15 @@ public class Hop {
         return axel.hasFallen();
     }
 
+    public void gameOver(int score){
+        this.frame.getContentPane().remove(this.gamePanel);
+        this.frame.getContentPane().add(this.statisticsPanel);
+        JLabel label=new JLabel("Score: "+score);
+        label.setFont(new Font("Arial",1,20));
+        this.frame.add(label,"Center");
+        this.frame.repaint();
+    }
+
     public static void main(String[] args) {
         Hop game = new Hop();
 
@@ -62,9 +71,8 @@ public class Hop {
             if (game.over()) {
                 game.drawTimer.stop();
                 game.gameTimer.stop();
-                game.frame.remove(game.gamePanel);
-                game.frame.remove(game.statisticsPanel);
-                // TODO: STATS INTERFACE
+                game.gameOver(game.axel.getScore());
+                // TODO: STATS INTERFACE TEST
             }
         });
 

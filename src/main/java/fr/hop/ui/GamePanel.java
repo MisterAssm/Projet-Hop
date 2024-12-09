@@ -1,3 +1,4 @@
+
 package fr.hop.ui;
 
 import fr.hop.entities.Axel;
@@ -22,6 +23,7 @@ public class GamePanel extends JPanel {
 
     private BufferedImage axelImage;
     private BufferedImage axelSymmetryImage;
+    private BufferedImage blockImage; // Image pour les blocs
 
     public GamePanel(Field field, Axel axel) {
         this.field = field;
@@ -30,13 +32,14 @@ public class GamePanel extends JPanel {
         try {
             axelImage = ImageUtilities.resizeImage(ImageIO.read(this.getClass().getResource("/images/axel.png")), AXEL_WIDTH, AXEL_HEIGHT);
             axelSymmetryImage = ImageUtilities.miroirImage(axelImage);
+            blockImage = ImageIO.read(this.getClass().getResource("/images/Block.png")); // Charger l'image du bloc
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("ERREUR: L'image n'a pas pu charger...");
         }
 
         setPreferredSize(new Dimension(field.width, field.height));
-        setLayout(new FlowLayout(FlowLayout.CENTER)); // https://stackoverflow.com/questions/75519236/how-to-use-flow-layout-inside-a-panel-in-java
+        setLayout(new FlowLayout(FlowLayout.CENTER));
         setBackground(new Color(247, 239, 233));
     }
 
@@ -48,21 +51,26 @@ public class GamePanel extends JPanel {
 
         g.setColor(Color.black);
 
-        // Dessine les blocs
-        field.getBlocks()
-                .forEach(block -> g.fillRect(
-                        block.getLeftPosition(),
-                        field.getTop() - block.getAltitude(),
-                        block.getWidth(),
-                        BLOCK_HEIGHT
-                ));
+        // Dessiner les blocs avec l'image
+        field.getBlocks().forEach(block -> {
+            // Utiliser l'image du bloc pour dessiner
+            g.drawImage(
+                    blockImage, // Image du bloc
+                    block.getLeftPosition(),
+                    field.getTop() - block.getAltitude() - BLOCK_HEIGHT, // Position ajustée pour la hauteur
+                    block.getWidth(),
+                    BLOCK_HEIGHT, // Hauteur du bloc
+                    null
+            );
+        });
 
+        // Dessiner Axel
         AbstractMap.SimpleEntry<Integer, Integer> position = axel.nextDrawPosition();
         final BufferedImage image = getCurrentImage();
 
         g.drawImage(
                 image,
-                (position.getKey() - image.getWidth() / 2 - Math.ceilDiv(AXEL_WIDTH, 10)), // car son nez dépasse
+                (position.getKey() - image.getWidth() / 2 - Math.ceilDiv(AXEL_WIDTH, 10)), // Ajuster la position pour Axel
                 field.getTop() - position.getValue() - image.getHeight(),
                 null
         );
@@ -87,3 +95,4 @@ public class GamePanel extends JPanel {
         return axel.isLastFacingLeft() ? axelSymmetryImage : axelImage;
     }
 }
+
