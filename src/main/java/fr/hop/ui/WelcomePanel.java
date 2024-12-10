@@ -1,7 +1,7 @@
 package fr.hop.ui;
 
 import fr.hop.Hop;
-import fr.hop.ui.buttons.HoveredButton;
+import fr.hop.ui.buttons.CircleHoveredButton;
 import fr.hop.utilities.ScoreUtilities;
 
 import javax.swing.*;
@@ -70,11 +70,11 @@ public class WelcomePanel extends JPanel {
         final Color hoverColor = new Color(216, 141, 123, 255);
 
         // Bouton pour jouer en solo
-        JButton soloButton = new HoveredButton("Jouer seul", fillColor, hoverColor, borderColor, customFont, hop::startGame);
+        JButton soloButton = new CircleHoveredButton("Jouer seul", fillColor, hoverColor, borderColor, customFont, hop::startGame);
         buttonPanel.add(soloButton);
 
         // Bouton pour jouer en multijoueur
-        JButton multiplayerButton = new HoveredButton("Jouer en multijoueur", fillColor, hoverColor, borderColor, customFont, () -> System.out.println("TODO 2"));
+        JButton multiplayerButton = new CircleHoveredButton("Jouer en multijoueur", fillColor, hoverColor, borderColor, customFont, () -> System.out.println("TODO 2"));
         buttonPanel.add(multiplayerButton);
 
         add(buttonPanel, BorderLayout.CENTER);

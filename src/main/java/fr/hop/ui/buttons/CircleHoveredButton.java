@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class HoveredButton extends JButton {
+public class CircleHoveredButton extends JButton {
 
     private final Color fillColor;
     private final Color hoverColor;
@@ -14,7 +14,7 @@ public class HoveredButton extends JButton {
 
     private boolean hovered;
 
-    public HoveredButton(String text, Color fillColor, Color hoverColor, Color borderColor, Font font, Runnable onClick) {
+    public CircleHoveredButton(String text, Color fillColor, Color hoverColor, Color borderColor, Font font, Runnable onClick) {
         super(text);
         this.fillColor = fillColor;
         this.hoverColor = hoverColor;
