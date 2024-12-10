@@ -1,7 +1,7 @@
 package fr.hop.ui;
 
 import fr.hop.Hop;
-import fr.hop.ui.utilities.HoveredButton;
+import fr.hop.ui.buttons.HoveredButton;
 import fr.hop.utilities.ScoreUtilities;
 
 import javax.swing.*;

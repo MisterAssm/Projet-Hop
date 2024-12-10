@@ -1,4 +1,4 @@
-package fr.hop.ui.utilities;
+package fr.hop.ui.buttons;
 
 import javax.swing.*;
 import java.awt.*;
