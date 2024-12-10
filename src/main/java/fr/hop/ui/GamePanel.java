@@ -95,4 +95,3 @@ public class GamePanel extends JPanel {
         return axel.isLastFacingLeft() ? axelSymmetryImage : axelImage;
     }
 }
-
