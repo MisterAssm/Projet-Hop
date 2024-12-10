@@ -2,6 +2,7 @@ package fr.hop.ui;
 
 import fr.hop.Hop;
 import fr.hop.ui.utilities.HoveredButton;
+import fr.hop.utilities.ScoreUtilities;
 
 import javax.swing.*;
 import java.awt.*;
@@ -88,9 +89,7 @@ public class WelcomePanel extends JPanel {
         bestScoreLabel.setForeground(new Color(90, 90, 90));
         bestScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // TODO: Chargement du meilleur score (fichier)
-        int bestScore = 1000; // Simulé ici
-        bestScoreLabel.setText("Meilleur score : " + bestScore);
+        bestScoreLabel.setText("Meilleur score : " + ScoreUtilities.getBestScore());
 
         scorePanel.add(bestScoreLabel);
         add(scorePanel, BorderLayout.SOUTH);

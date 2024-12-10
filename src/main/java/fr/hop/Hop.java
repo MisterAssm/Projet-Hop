@@ -6,6 +6,7 @@ import fr.hop.ui.StatisticsPanel;
 import fr.hop.game.Field;
 import fr.hop.ui.GamePanel;
 import fr.hop.ui.WelcomePanel;
+import fr.hop.utilities.ScoreUtilities;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,6 +78,7 @@ public class Hop {
     }
 
     public void gameOver(int score) {
+        ScoreUtilities.saveBestScore(score);
         this.frame.getContentPane().remove(this.gamePanel);
         this.frame.getContentPane().add(this.statisticsPanel);
 
