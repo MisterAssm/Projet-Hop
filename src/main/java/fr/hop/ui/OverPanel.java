@@ -102,7 +102,7 @@ public class OverPanel extends JPanel {
         buttonPanel.setBackground(new Color(247, 239, 233));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50)); // Marges
 
-        newGameButton = new RectangleHoveredButton("Nouvelle partie", customFont, hop::startGame);
+        newGameButton = new RectangleHoveredButton("Nouvelle partie", customFont, () -> hop.startGame(hop.isLastGameMultiplayer()));
         buttonPanel.add(newGameButton);
 
         mainMenuButton = new RectangleHoveredButton("Menu principal", customFont, hop::initWelcomePanel);

@@ -21,7 +21,7 @@ public class Hop {
     private final JFrame frame;
 
     private Field field;
-    private Axel axel;
+    private java.util.List<Axel> axel;
     private Timer gameTimer;
     private Timer drawTimer;
 
@@ -31,11 +31,13 @@ public class Hop {
     private Optional<OverPanel> overPanel;
 
     private GameHandler gameHandler;
+    private boolean lastGameMultiplayer;
 
     public Hop() {
         this.frame = new JFrame("Hop!");
         this.welcomePanel = new WelcomePanel(this);
         this.overPanel = Optional.empty();
+        this.lastGameMultiplayer = false;
         initWelcomePanel();
     }
 
@@ -51,8 +53,9 @@ public class Hop {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    public void initNewGame() {
+    public void initNewGame(boolean multiplayer) {
         frame.remove(welcomePanel);
+        lastGameMultiplayer = multiplayer;
 
         overPanel.ifPresent(panel -> {
             frame.remove(panel);
@@ -60,7 +63,8 @@ public class Hop {
         });
 
         this.field = new Field(WIDTH, HEIGHT);
-        this.axel = new Axel(field, WIDTH / 2, Field.START_ALTITUDE); // ALTITUDE_GAP ?
+        this.axel = multiplayer ? java.util.List.of(new Axel(field, WIDTH / 2 + 10, Field.START_ALTITUDE), new Axel(field, WIDTH / 2 - 10, Field.START_ALTITUDE))
+                : java.util.List.of(new Axel(field, WIDTH / 2, Field.START_ALTITUDE));
         this.gamePanel = new GamePanel(field, axel);
         this.statisticsPanel = new StatisticsPanel(field, axel);
         this.gameHandler = new GameHandler(axel);
@@ -76,15 +80,15 @@ public class Hop {
 
     public void round(boolean update) {
         if (update) {
-            axel.update();
+            axel.forEach(Axel::update);
             field.update();
         }
 
         frame.repaint();
     }
 
-    public void startGame() {
-        initNewGame();
+    public void startGame(boolean multiplayer) {
+        initNewGame(multiplayer);
 
         drawTimer = new Timer(1, ignored -> round(false));
         gameTimer = new Timer(DELAY, ignored -> {
@@ -93,17 +97,12 @@ public class Hop {
             if (over()) {
                 drawTimer.stop();
                 gameTimer.stop();
-                gameOver(axel.getScore());
+                gameOver(axel.stream().map(Axel::getScore).max(Integer::compare).orElse(0));
             }
         });
 
         drawTimer.start();
         gameTimer.start();
-    }
-
-    public void restartGame() {
-        initNewGame();
-        startGame();
     }
 
     public void gameOver(int score) {
@@ -121,6 +120,10 @@ public class Hop {
     }
 
     public boolean over() {
-        return axel.hasFallen();
+        return axel.stream().anyMatch(Axel::hasFallen);
+    }
+
+    public boolean isLastGameMultiplayer() {
+        return lastGameMultiplayer;
     }
 }

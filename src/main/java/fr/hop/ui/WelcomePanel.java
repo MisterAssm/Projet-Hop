@@ -70,11 +70,11 @@ public class WelcomePanel extends JPanel {
         final Color hoverColor = new Color(216, 141, 123, 255);
 
         // Bouton pour jouer en solo
-        JButton soloButton = new CircleHoveredButton("Jouer seul", fillColor, hoverColor, borderColor, customFont, hop::startGame);
+        JButton soloButton = new CircleHoveredButton("Jouer seul", fillColor, hoverColor, borderColor, customFont, () -> hop.startGame(false));
         buttonPanel.add(soloButton);
 
         // Bouton pour jouer en multijoueur
-        JButton multiplayerButton = new CircleHoveredButton("Jouer en multijoueur", fillColor, hoverColor, borderColor, customFont, () -> System.out.println("TODO 2"));
+        JButton multiplayerButton = new CircleHoveredButton("Jouer en multijoueur", fillColor, hoverColor, borderColor, customFont, () -> hop.startGame(true));
         buttonPanel.add(multiplayerButton);
 
         add(buttonPanel, BorderLayout.CENTER);

@@ -11,6 +11,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.AbstractMap;
+import java.util.List;
 
 public class GamePanel extends JPanel {
 
@@ -18,20 +19,28 @@ public class GamePanel extends JPanel {
     public static final int AXEL_WIDTH = 48;
     public static final int AXEL_HEIGHT = 48;
 
-    private final Axel axel;
+    private final List<Axel> axelList;
     private final Field field;
 
-    private BufferedImage axelImage;
-    private BufferedImage axelSymmetryImage;
+    private BufferedImage[] axelImages;
+    private BufferedImage[] axelSymmetryImages;
     private BufferedImage blockImage; // Image pour les blocs
 
-    public GamePanel(Field field, Axel axel) {
+    public GamePanel(Field field, List<Axel> axelList) {
         this.field = field;
-        this.axel = axel;
+        this.axelList = axelList;
 
         try {
-            axelImage = ImageUtilities.resizeImage(ImageIO.read(this.getClass().getResource("/images/axel.png")), AXEL_WIDTH, AXEL_HEIGHT);
-            axelSymmetryImage = ImageUtilities.miroirImage(axelImage);
+            axelImages = new BufferedImage[axelList.size()];
+            axelSymmetryImages = new BufferedImage[axelList.size()];
+
+            for (int i = 0; i < axelList.size(); i++) {
+                final BufferedImage image = getImageAxelByNumber(i);
+
+                axelImages[i] = image;
+                axelSymmetryImages[i] = ImageUtilities.miroirImage(image);
+            }
+
             blockImage = ImageIO.read(this.getClass().getResource("/images/Block.png")); // Charger l'image du bloc
         } catch (IOException e) {
             e.printStackTrace();
@@ -41,6 +50,10 @@ public class GamePanel extends JPanel {
         setPreferredSize(new Dimension(field.width, field.height));
         setLayout(new FlowLayout(FlowLayout.CENTER));
         setBackground(new Color(247, 239, 233));
+    }
+
+    private BufferedImage getImageAxelByNumber(int n) throws IOException {
+        return ImageUtilities.resizeImage(ImageIO.read(this.getClass().getResource("/images/axel_" + n + ".png")), AXEL_WIDTH, AXEL_HEIGHT);
     }
 
     public void paintComponent(Graphics g) {
@@ -65,15 +78,19 @@ public class GamePanel extends JPanel {
         });
 
         // Dessiner Axel
-        AbstractMap.SimpleEntry<Integer, Integer> position = axel.nextDrawPosition();
-        final BufferedImage image = getCurrentImage();
 
-        g.drawImage(
-                image,
-                (position.getKey() - image.getWidth() / 2 - Math.ceilDiv(AXEL_WIDTH, 10)), // Ajuster la position pour Axel
-                field.getTop() - position.getValue() - image.getHeight(),
-                null
-        );
+        int n = 0;
+        for (Axel axel : axelList) {
+            final AbstractMap.SimpleEntry<Integer, Integer> position = axel.nextDrawPosition();
+            final BufferedImage image = getCurrentImage(axel, n++);
+
+            g.drawImage(
+                    image,
+                    (position.getKey() - image.getWidth() / 2 - Math.ceilDiv(AXEL_WIDTH, 10)), // Ajuster la position pour Axel
+                    field.getTop() - position.getValue() - image.getHeight(),
+                    null
+            );
+        }
 
     }
 
@@ -91,7 +108,7 @@ public class GamePanel extends JPanel {
         }
     }
 
-    private BufferedImage getCurrentImage() {
-        return axel.isLastFacingLeft() ? axelSymmetryImage : axelImage;
+    private BufferedImage getCurrentImage(Axel axel, int n) {
+        return axel.isLastFacingLeft() ? axelSymmetryImages[n] : axelImages[n];
     }
 }

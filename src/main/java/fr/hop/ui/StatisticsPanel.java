@@ -5,17 +5,18 @@ import fr.hop.game.Field;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class StatisticsPanel extends JPanel {
 
     private final Field field;
-    private final Axel axel;
+    private final List<Axel> axelList;
     private final JLabel levelLabel;
     private final JLabel scoreLabel;
 
-    public StatisticsPanel(Field field, Axel axel) {
+    public StatisticsPanel(Field field, List<Axel> axelList) {
         this.field = field;
-        this.axel = axel;
+        this.axelList = axelList;
         this.levelLabel = new JLabel();
         this.scoreLabel = new JLabel();
 
@@ -34,7 +35,7 @@ public class StatisticsPanel extends JPanel {
 
     public void update() {
         levelLabel.setText(String.format("Difficulté : %s", field.getCurrentLevel()));
-        scoreLabel.setText(String.format("Score : %s", axel.getScore()));
+        scoreLabel.setText(String.format("Score : %s", axelList.stream().map(Axel::getScore).max(Integer::compare).orElse(0)));
     }
 
     @Override

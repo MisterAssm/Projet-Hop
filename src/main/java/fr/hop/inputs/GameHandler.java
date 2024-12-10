@@ -4,20 +4,28 @@ import fr.hop.entities.Axel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 public class GameHandler implements KeyListener {
 
-    private final Map<Integer, Function<Boolean, Runnable>> keyActions;
+    private Map<Integer, Function<Boolean, Runnable>> keyActions;
 
-    public GameHandler(Axel axel) {
-        keyActions = Map.of(
-                KeyEvent.VK_UP, (isPressed) -> () -> axel.setJumping(isPressed),
-                KeyEvent.VK_DOWN, (isPressed) -> () -> axel.setDiving(isPressed),
-                KeyEvent.VK_LEFT, (isPressed) -> () -> axel.setMovingLeft(isPressed),
-                KeyEvent.VK_RIGHT, (isPressed) -> () -> axel.setMovingRight(isPressed)
+    public GameHandler(List<Axel> axelList) {
+        keyActions = new HashMap<>(generateKeyActions(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, axelList.getFirst()));
+
+        if (axelList.size() > 1) {
+            keyActions = new HashMap<>(keyActions);
+            keyActions.putAll(generateKeyActions(KeyEvent.VK_Z, KeyEvent.VK_S, KeyEvent.VK_Q, KeyEvent.VK_D, axelList.get(1)));
+        }
+    }
+
+    private Map<Integer, Function<Boolean, Runnable>> generateKeyActions(Integer up, Integer down, Integer left, Integer right, Axel axel) {
+        return Map.of(
+                up, (isPressed) -> () -> axel.setJumping(isPressed),
+                down, (isPressed) -> () -> axel.setDiving(isPressed),
+                left, (isPressed) -> () -> axel.setMovingLeft(isPressed),
+                right, (isPressed) -> () -> axel.setMovingRight(isPressed)
         );
     }
 
