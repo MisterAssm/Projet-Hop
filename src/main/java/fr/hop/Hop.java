@@ -5,6 +5,7 @@ import fr.hop.inputs.GameHandler;
 import fr.hop.ui.StatisticsPanel;
 import fr.hop.game.Field;
 import fr.hop.ui.GamePanel;
+import fr.hop.ui.WelcomePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,11 +17,14 @@ public class Hop {
 
     private final JFrame frame;
     private final Field field;
-    private final Axel axel;
+    private Axel axel;
     private Timer gameTimer;
     private Timer drawTimer;
+
     private GamePanel gamePanel;
     private StatisticsPanel statisticsPanel;
+    private WelcomePanel welcomePanel;
+
     private GameHandler gameHandler;
 
     public Hop() {
@@ -29,11 +33,10 @@ public class Hop {
         this.gamePanel = new GamePanel(field, axel);
         this.statisticsPanel = new StatisticsPanel(field, axel);
         this.gameHandler = new GameHandler(axel);
+        this.welcomePanel = new WelcomePanel(this);
 
-        this.frame = new JFrame("fr.Hop!");
-        frame.add(gamePanel);
-        frame.add(statisticsPanel, BorderLayout.NORTH);
-        frame.addKeyListener(gameHandler);
+        this.frame = new JFrame("Hop!");
+        frame.add(welcomePanel);
         frame.pack();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -48,35 +51,43 @@ public class Hop {
         frame.repaint();
     }
 
-    public boolean over() {
-        return axel.hasFallen();
-    }
+    public void startGame() {
+        frame.remove(welcomePanel);
 
-    public void gameOver(int score){
-        this.frame.getContentPane().remove(this.gamePanel);
-        this.frame.getContentPane().add(this.statisticsPanel);
-        JLabel label=new JLabel("Score: "+score);
-        label.setFont(new Font("Arial",1,20));
-        this.frame.add(label,"Center");
-        this.frame.repaint();
-    }
+        frame.add(gamePanel);
+        frame.add(statisticsPanel, BorderLayout.NORTH);
+        frame.addKeyListener(gameHandler);
+        frame.pack();
+        frame.setFocusable(true);
+        frame.requestFocus();
 
-    public static void main(String[] args) {
-        Hop game = new Hop();
+        drawTimer = new Timer(1, ignored -> round(false));
+        gameTimer = new Timer(DELAY, ignored -> {
+            round(true);
 
-        game.drawTimer = new Timer(1, ignored -> game.round(false));
-        game.gameTimer = new Timer(DELAY, ignored -> {
-            game.round(true);
-
-            if (game.over()) {
-                game.drawTimer.stop();
-                game.gameTimer.stop();
-                game.gameOver(game.axel.getScore());
-                // TODO: STATS INTERFACE TEST
+            if (over()) {
+                drawTimer.stop();
+                gameTimer.stop();
+                gameOver(axel.getScore());
             }
         });
 
-        game.drawTimer.start();
-        game.gameTimer.start();
+        drawTimer.start();
+        gameTimer.start();
+    }
+
+    public void gameOver(int score) {
+        this.frame.getContentPane().remove(this.gamePanel);
+        this.frame.getContentPane().add(this.statisticsPanel);
+
+        JLabel label = new JLabel("Score: " + score);
+        label.setFont(new Font("Arial", 1, 20));
+
+        this.frame.add(label, "Center");
+        this.frame.repaint();
+    }
+
+    public boolean over() {
+        return axel.hasFallen();
     }
 }

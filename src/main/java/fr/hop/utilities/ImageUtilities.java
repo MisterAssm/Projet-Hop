@@ -14,6 +14,7 @@ public class ImageUtilities {
         return bufferedImage;
     }
 
+    // chatgpt
     public static BufferedImage miroirImage(BufferedImage originalImage) {
         int width = originalImage.getWidth();
         int height = originalImage.getHeight();

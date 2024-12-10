@@ -5,6 +5,7 @@ import java.util.ArrayDeque;
 
 public class CoordinateUtilities {
 
+    // chatgpt
     public static ArrayDeque<AbstractMap.SimpleEntry<Integer, Integer>> generateCoordinates(int n, int x0, int y0, int xf, int yf) {
         ArrayDeque<AbstractMap.SimpleEntry<Integer, Integer>> coordinates = new ArrayDeque<>();
 
