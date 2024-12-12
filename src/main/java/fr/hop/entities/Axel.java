@@ -4,6 +4,7 @@ import fr.hop.game.Field;
 import fr.hop.ui.GamePanel;
 import fr.hop.utilities.CoordinateUtilities;
 
+
 import java.util.*;
 
 import static fr.hop.ui.GamePanel.AXEL_WIDTH;
@@ -39,6 +40,10 @@ public class Axel {
 
     private Queue<AbstractMap.SimpleEntry<Integer, Integer>> drawPositions; // FIFO
 
+
+
+
+
     public Axel(Field field, int startX, int startY) {
         this.gameField = field;
         this.currentX = startX;
@@ -46,6 +51,8 @@ public class Axel {
         this.isAlive = true;
         this.drawPositions = new ArrayDeque<>();
         this.lastFacingLeft = false;
+
+
     }
 
     // Mise à jour de la vitesse en fonction des actions
@@ -79,6 +86,8 @@ public class Axel {
         return x < block.getLeftPosition() || x > block.getRightPosition() + AXEL_WIDTH / 2.42; // 2.42 car j'ai mesuré
     }
 
+
+
     // Vérification des collisions avec un bloc
     private void performCollisionWithBlock(Block block) {
         // On considère les pieds - nez qui dépasse
@@ -101,6 +110,7 @@ public class Axel {
             }
         }
     }
+
 
     public void checkCollision() {
         gameField.getBlocks().stream()

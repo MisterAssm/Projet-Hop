@@ -2,6 +2,7 @@
 package fr.hop.ui;
 
 import fr.hop.entities.Axel;
+import fr.hop.entities.BonusBlock;
 import fr.hop.game.Field;
 import fr.hop.utilities.ImageUtilities;
 
@@ -25,6 +26,7 @@ public class GamePanel extends JPanel {
     private BufferedImage[] axelImages;
     private BufferedImage[] axelSymmetryImages;
     private BufferedImage blockImage; // Image pour les blocs
+    private BufferedImage bonusBlockImage; // Image pour les blocs bonus
 
     public GamePanel(Field field, List<Axel> axelList) {
         this.field = field;
@@ -42,6 +44,7 @@ public class GamePanel extends JPanel {
             }
 
             blockImage = ImageIO.read(this.getClass().getResource("/images/Block.png")); // Charger l'image du bloc
+            bonusBlockImage = ImageIO.read(this.getClass().getResource("/images/blueblock.png")); // Charger l'image du bloc bonus
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("ERREUR: L'image n'a pas pu charger...");
@@ -56,6 +59,8 @@ public class GamePanel extends JPanel {
         return ImageUtilities.resizeImage(ImageIO.read(this.getClass().getResource("/images/axel_" + n + ".png")), AXEL_WIDTH, AXEL_HEIGHT);
     }
 
+
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
@@ -64,11 +69,13 @@ public class GamePanel extends JPanel {
 
         g.setColor(Color.black);
 
-        // Dessiner les blocs avec l'image
+        // Dessiner les blocs (normaux et bonus)
         field.getBlocks().forEach(block -> {
-            // Utiliser l'image du bloc pour dessiner
+            BufferedImage blockImageToDraw = (block instanceof BonusBlock) ? bonusBlockImage : blockImage;
+
+            // Dessiner le bloc
             g.drawImage(
-                    blockImage, // Image du bloc
+                    blockImageToDraw,
                     block.getLeftPosition(),
                     field.getTop() - block.getAltitude() - BLOCK_HEIGHT, // Position ajustée pour la hauteur
                     block.getWidth(),
@@ -78,7 +85,6 @@ public class GamePanel extends JPanel {
         });
 
         // Dessiner Axel
-
         int n = 0;
         for (Axel axel : axelList) {
             final AbstractMap.SimpleEntry<Integer, Integer> position = axel.nextDrawPosition();
@@ -91,8 +97,9 @@ public class GamePanel extends JPanel {
                     null
             );
         }
-
     }
+
+
 
     private void drawGrid(Graphics g) {
         g.setColor(new Color(245, 231, 219));

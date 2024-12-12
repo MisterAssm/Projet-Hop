@@ -1,9 +1,11 @@
 package fr.hop.game;
 
 import fr.hop.entities.Block;
+import fr.hop.entities.BonusBlock;
 
 import java.util.ArrayDeque;
 import java.util.Comparator;
+import java.util.Random;
 
 public class Field {
 
@@ -42,22 +44,45 @@ public class Field {
         }
     }
 
+
     public void update() {
         this.bottom += currentLevel;
         this.top += currentLevel;
 
         blocks.removeIf(block -> block.getAltitude() < this.bottom);
 
+        ArrayDeque<Block> updatedBlocks = new ArrayDeque<>();
+        blocks.forEach(block -> {
+            if (block instanceof BonusBlock) {
+                updatedBlocks.add(((BonusBlock) block).updatePosition(this.width));
+            } else {
+                updatedBlocks.add(block);
+            }
+        });
+
+        this.blocks.clear();
+        this.blocks.addAll(updatedBlocks);
+
         blocks.stream().max(Comparator.comparingInt(Block::getAltitude)).ifPresent(highestBlock -> {
             if (this.top - highestBlock.getAltitude() >= ALTITUDE_GAP)
                 addBlockAtAltitude(highestBlock.getAltitude() + ALTITUDE_GAP);
         });
-
     }
+
+
 
     private void addBlockAtAltitude(int altitude) {
-        this.blocks.addFirst(Block.randomBlock(this.currentLevel, altitude, this.width));
+        Random random = new Random();
+        if (random.nextDouble() < 0.4) { // 40% de chance de générer un bloc bonus
+            int width = Block.randomNumber(Block.INITIAL_MIN_WIDTH, Block.INITIAL_MAX_WIDTH);
+            int x = Block.randomNumber(0, this.width - width);
+            int direction = random.nextBoolean() ? 1 : -1;
+            this.blocks.addFirst(new BonusBlock(x, altitude, width, direction));
+        } else {
+            this.blocks.addFirst(Block.randomBlock(this.currentLevel, altitude, this.width));
+        }
     }
+
 
     public ArrayDeque<Block> getBlocks() {
         return blocks;
