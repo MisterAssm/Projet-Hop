@@ -40,7 +40,7 @@ L'objectif principal reste le même : accumuler le maximum de points en sautant 
 ---
 
 ## Utilisation
-> build : Java 21 (class file version 65.0)
+> build : Java 11 (class file version 55.0)
 
 ```bash
 java -jar Hop.jar

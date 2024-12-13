@@ -63,7 +63,7 @@ public class Hop {
         });
 
         this.field = new Field(WIDTH, HEIGHT);
-        this.axel = multiplayer ? java.util.List.of(new Axel(field, WIDTH / 2 + 10, Field.START_ALTITUDE), new Axel(field, WIDTH / 2 - 10, Field.START_ALTITUDE))
+        this.axel = multiplayer ? java.util.List.of()
                 : java.util.List.of(new Axel(field, WIDTH / 2, Field.START_ALTITUDE));
         this.gamePanel = new GamePanel(field, axel);
         this.statisticsPanel = new StatisticsPanel(field, axel);
