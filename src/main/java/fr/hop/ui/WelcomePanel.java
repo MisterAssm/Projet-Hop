@@ -6,9 +6,8 @@ import fr.hop.utilities.ScoreUtilities;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 
 public class WelcomePanel extends JPanel {
 
@@ -19,9 +18,13 @@ public class WelcomePanel extends JPanel {
         this.hop = hop;
 
         try {
-            File fontFile = new File(this.getClass().getResource("/fonts/DoodleFont.ttf").toURI());
-            customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(48f);
-        } catch (IOException | FontFormatException | URISyntaxException e) {
+            InputStream fontStream = this.getClass().getResourceAsStream("/fonts/DoodleFont.ttf");
+            if (fontStream == null) {
+                throw new IOException("Police non trouvée : /fonts/DoodleFont.ttf");
+            }
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(48f);
+            fontStream.close();
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
             System.out.println("ERREUR: La police n'a pas pu être chargée. Utilisation de la police par défaut.");
             customFont = new Font("Arial", Font.BOLD, 48); // Police par défaut en cas d'échec

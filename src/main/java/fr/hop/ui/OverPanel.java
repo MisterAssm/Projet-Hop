@@ -5,16 +5,13 @@ import fr.hop.ui.buttons.RectangleHoveredButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.InputStream;
 
 public class OverPanel extends JPanel {
 
     private final int currentScore;
     private final int bestScore;
-    private JButton newGameButton;
-    private JButton mainMenuButton;
     private Font customFont;
 
     public OverPanel(int currentScore, int bestScore, Hop hop) {
@@ -22,9 +19,13 @@ public class OverPanel extends JPanel {
         this.bestScore = bestScore;
 
         try {
-            File fontFile = new File(this.getClass().getResource("/fonts/DoodleFont.ttf").toURI());
-            customFont = Font.createFont(Font.TRUETYPE_FONT, fontFile).deriveFont(48f);
-        } catch (IOException | FontFormatException | URISyntaxException e) {
+            InputStream fontStream = this.getClass().getResourceAsStream("/fonts/DoodleFont.ttf");
+            if (fontStream == null) {
+                throw new IOException("Police non trouvée : /fonts/DoodleFont.ttf");
+            }
+            customFont = Font.createFont(Font.TRUETYPE_FONT, fontStream).deriveFont(48f);
+            fontStream.close();
+        } catch (IOException | FontFormatException e) {
             e.printStackTrace();
             System.out.println("ERREUR: La police n'a pas pu être chargée. Utilisation de la police par défaut.");
             customFont = new Font("Arial", Font.BOLD, 48); // Police par défaut en cas d'échec
@@ -102,10 +103,10 @@ public class OverPanel extends JPanel {
         buttonPanel.setBackground(new Color(247, 239, 233));
         buttonPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50)); // Marges
 
-        newGameButton = new RectangleHoveredButton("Nouvelle partie", customFont, () -> hop.startGame(hop.isLastGameMultiplayer()));
+        JButton newGameButton = new RectangleHoveredButton("Nouvelle partie", customFont, () -> hop.startGame(hop.isLastGameMultiplayer()));
         buttonPanel.add(newGameButton);
 
-        mainMenuButton = new RectangleHoveredButton("Menu principal", customFont, hop::initWelcomePanel);
+        JButton mainMenuButton = new RectangleHoveredButton("Menu principal", customFont, hop::initWelcomePanel);
         buttonPanel.add(mainMenuButton);
 
         add(buttonPanel, BorderLayout.SOUTH);
