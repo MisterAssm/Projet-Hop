@@ -12,7 +12,7 @@ public class GameHandler implements KeyListener {
     private Map<Integer, Function<Boolean, Runnable>> keyActions;
 
     public GameHandler(List<Axel> axelList) {
-        keyActions = new HashMap<>(generateKeyActions(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, axelList.getFirst()));
+        keyActions = new HashMap<>(generateKeyActions(KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT, axelList.get(0)));
 
         if (axelList.size() > 1) {
             keyActions = new HashMap<>(keyActions);

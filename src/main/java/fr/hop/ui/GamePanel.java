@@ -92,7 +92,7 @@ public class GamePanel extends JPanel {
 
             g.drawImage(
                     image,
-                    (position.getKey() - image.getWidth() / 2 - Math.ceilDiv(AXEL_WIDTH, 10)), // Ajuster la position pour Axel
+                    (position.getKey() - image.getWidth() / 2 - Math.floorDiv(AXEL_WIDTH, 10)), // Ajuster la position pour Axel
                     field.getTop() - position.getValue() - image.getHeight(),
                     null
             );
