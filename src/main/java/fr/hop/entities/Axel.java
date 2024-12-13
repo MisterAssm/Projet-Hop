@@ -5,6 +5,9 @@ import fr.hop.ui.GamePanel;
 import fr.hop.utilities.CoordinateUtilities;
 
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import java.util.*;
 
 import static fr.hop.ui.GamePanel.AXEL_WIDTH;
@@ -40,10 +43,6 @@ public class Axel {
 
     private Queue<AbstractMap.SimpleEntry<Integer, Integer>> drawPositions; // FIFO
 
-
-
-
-
     public Axel(Field field, int startX, int startY) {
         this.gameField = field;
         this.currentX = startX;
@@ -60,6 +59,7 @@ public class Axel {
         if (isJumping && !isFalling) {
             velocityY = MAX_JUMP_SPEED;
             isFalling = true;
+            playJumpSound();
         }
 
         if (isFalling) {
@@ -85,7 +85,6 @@ public class Axel {
     private boolean nextXIsFalling(double x, Block block) {
         return x < block.getLeftPosition() || x > block.getRightPosition() + AXEL_WIDTH / 2.42; // 2.42 car j'ai mesuré
     }
-
 
 
     // Vérification des collisions avec un bloc
@@ -148,6 +147,20 @@ public class Axel {
 
     public int getScore() {
         return Math.max(highestAltitude - Field.START_ALTITUDE, 0);
+    }
+
+    private void playJumpSound() {
+        try {
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(
+                    this.getClass().getResource("/sounds/jump.wav")
+            );
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("ERREUR: Impossible de lire le son de saut.");
+        }
     }
 
     public void setJumping(boolean jumping) {
