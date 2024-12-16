@@ -11,6 +11,7 @@ import fr.hop.utilities.ScoreUtilities;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class Hop {
@@ -63,8 +64,15 @@ public class Hop {
         });
 
         this.field = new Field(WIDTH, HEIGHT);
-        this.axel = multiplayer ? java.util.List.of()
-                : java.util.List.of(new Axel(field, WIDTH / 2, Field.START_ALTITUDE));
+        this.axel = new ArrayList<>();
+
+        if (multiplayer) {
+            this.axel.add(new Axel(field, WIDTH / 2 + 10, Field.START_ALTITUDE));
+            this.axel.add(new Axel(field, WIDTH / 2 - 10, Field.START_ALTITUDE));
+        } else {
+            this.axel.add(new Axel(field, WIDTH / 2, Field.START_ALTITUDE));
+        }
+
         this.gamePanel = new GamePanel(field, axel);
         this.statisticsPanel = new StatisticsPanel(field, axel);
         this.gameHandler = new GameHandler(axel);
